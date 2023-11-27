@@ -1,11 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
-
-
-public class Setts {
+public class Test {
     public static <T> Set<T> customUnion(Set<T> set1, Set<T> set2) {
         Set<T> union = new HashSet<>(set1);
         for (T item : set2) {
@@ -42,51 +40,64 @@ public class Setts {
     }
 
     public static void main(String[] args) {
-        
-
         Set<Integer> set1 = new HashSet<>();
         Set<Integer> set2 = new HashSet<>();
 
-        try (BufferedReader reader1 = new BufferedReader(new FileReader("set1.txt"));
-        BufferedReader reader2 = new BufferedReader(new FileReader("set2.txt"))) {
-       String line;
-       while ((line = reader1.readLine()) != null) {
-           String[] set1Values = line.split(",");
-           for (String value : set1Values) {
-               set1.add(Integer.parseInt(value.trim()));
-           }
-       }
-       while ((line = reader2.readLine()) != null) {
-           String[] set2Values = line.split(",");
-           for (String value : set2Values) {
-               set2.add(Integer.parseInt(value.trim()));
-           }
-       }
-   } catch (IOException e) {
-       e.printStackTrace();
-   }
+        String set1Filename = "set1.txt";
+        String set2Filename = "set2.txt";
 
-       
+        // Read data for set1 from file
+        try {
+            Scanner fileScanner1 = new Scanner(new File(set1Filename));
+            String set1Input = fileScanner1.nextLine();
+            String[] set1Values = set1Input.split(",");
+            for (String value : set1Values) {
+                set1.add(Integer.parseInt(value.trim()));
+            }
+            fileScanner1.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + set1Filename);
+            System.exit(1);
+        }
+
+        // Read data for set2 from file
+        try {
+            Scanner fileScanner2 = new Scanner(new File(set2Filename));
+            String set2Input = fileScanner2.nextLine();
+            String[] set2Values = set2Input.split(",");
+            for (String value : set2Values) {
+                set2.add(Integer.parseInt(value.trim()));
+            }
+            fileScanner2.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + set2Filename);
+            System.exit(1);
+        }
+
+
+        // Test custom union
         Set<Integer> unionResultAB = customUnion(set1, set2);
         System.out.println("A Union B: " + unionResultAB);
         Set<Integer> unionResultBA = customUnion(set2, set1);
         System.out.println("B Union A: " + unionResultBA);
 
-     
+        // Test custom intersection
         Set<Integer> intersectionResultAB = customIntersection(set1, set2);
         System.out.println("A intersection B: " + intersectionResultAB);
         Set<Integer> intersectionResultBA = customIntersection(set2, set1);
         System.out.println("B intersection A: " + intersectionResultBA);
 
-        
+        // Test custom difference
         Set<Integer> differenceResultAB = customDifference(set1, set2);
         System.out.println("A Difference B: " + differenceResultAB);
         Set<Integer> differenceResultBA = customDifference(set2, set1);
         System.out.println("B Difference A: " + differenceResultBA);
 
+        // Test custom subset
         boolean isSubsetResultAB = customIsSubset(set1, set2);
         System.out.println("A subset B: " + isSubsetResultAB);
         boolean isSubsetResultBA = customIsSubset(set2, set1);
         System.out.println("B subset A: " + isSubsetResultBA);
     }
 }
+
