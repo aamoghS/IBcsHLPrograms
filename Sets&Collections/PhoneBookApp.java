@@ -12,7 +12,12 @@ public class PhoneBookApp {
     }
 
     public void removeEntry(String name) {
-        phoneBook.remove(name);
+        if (phoneBook.containsKey(name)) {
+            phoneBook.remove(name);
+            System.out.println("Entry removed successfully.");
+        } else {
+            System.out.println("Error: Name not found in the entries.");
+        }
     }
 
     public void viewEntries() {
@@ -39,7 +44,7 @@ public class PhoneBookApp {
 
             switch (choice) {
                 case 1:
-    try {
+                    try {
         Scanner fileScanner1 = new Scanner(new File("Names.txt")).useDelimiter(",");
         Scanner fileScanner2 = new Scanner(new File("Number.txt")).useDelimiter(",");
 
@@ -58,14 +63,11 @@ public class PhoneBookApp {
     } catch (FileNotFoundException e) {
         e.printStackTrace(); // Handle the exception according to your needs
     }
-    break;
-
-                
+                    break;
                 case 2:
                     System.out.print("Enter Name to Remove: ");
                     String nameToRemove = scanner.nextLine();
                     phoneBookApp.removeEntry(nameToRemove);
-                    System.out.println("Entry removed successfully.");
                     break;
                 case 3:
                     phoneBookApp.viewEntries();
@@ -79,4 +81,3 @@ public class PhoneBookApp {
         }
     }
 }
-
