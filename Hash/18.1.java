@@ -13,7 +13,7 @@ public class HashTable1 {
     }
 
     private int hashFunction(int key) {
-        // Simple hash function, you may replace it with a more sophisticated one
+        // simple
         return key % this.size;
     }
 
@@ -48,7 +48,7 @@ public class HashTable1 {
         HashTable1 hashTable = new HashTable1(tableSize);
 
         for (int i = 0; i < numItems; i++) {
-            int key = generateKey();  // Replace with your key generation logic
+            int key = generateKey();  
             hashTable.insert(key);
         }
 
@@ -58,7 +58,7 @@ public class HashTable1 {
     }
 
     private static int generateKey() {
-        // Replace this with your key generation logic
+        
         return (int) (Math.random() * 100) + 1;
     }
 }
