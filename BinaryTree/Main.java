@@ -207,26 +207,22 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                try {
-                    File numberFile = new File("Numbers");
-                    Scanner numberScanner = new Scanner(numberFile);
-                    File infoFile = new File("Names");
-                    Scanner infoScanner = new Scanner(infoFile);
+                System.out.print("Enter number of data entries to insert: ");
+                int entries = scanner.nextInt();
+                scanner.nextLine();
 
-                    while (numberScanner.hasNextLine() && infoScanner.hasNextLine()) {
-                        int number = Integer.parseInt(numberScanner.nextLine());
-                        String data = infoScanner.nextLine();
-                        Info info = new Info();
-                        System.out.println(number + " " + data);
-                        info.setData(data);
-                        info.setNumber(number);
-                        tree.insert(info);
-                    }
-                    numberScanner.close();
-                    infoScanner.close();
-                } catch (FileNotFoundException e) {
-                    System.err.println("File not found: " + e.getMessage());
-                }
+                for (int i = 0; i < entries; i++) {
+                    System.out.print("Enter data: ");
+                    String data = scanner.nextLine();
+                    System.out.print("Enter number: ");
+                    int number = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Info info = new Info();
+                    info.setData(data);
+                    info.setNumber(number);
+                    tree.insert(info);
+                            }
                 break;
                 case 2:
                     System.out.println("Preorder traversal:");
